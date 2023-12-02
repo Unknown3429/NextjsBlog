@@ -3,6 +3,7 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/Navbar'
+import EditorPage from './editorPage/page';
 import { createContext, useEffect, useState } from 'react'
 import { lookInSession } from '@/SessionFunc';
 
@@ -20,6 +21,7 @@ export const UserContext = createContext({})
 export default function RootLayout({ children }) {
 
   const [userAuth, setUserAuth] = useState({})
+  const [criteria, setCriteria] = useState(false)
   useEffect(() => {
     let userInSession = lookInSession("user")
     userInSession ? setUserAuth(JSON.parse(userInSession)) : setUserAuth({ token: null })
@@ -29,9 +31,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <UserContext.Provider value={{ userAuth, setUserAuth }}>
-          <Navbar />
-          {children}
+        <UserContext.Provider value={{ userAuth, setUserAuth, setCriteria, criteria }}>
+          {!criteria ?
+            <div>
+              <Navbar />
+              {children}
+            </div> :
+            <div >
+              <EditorPage />
+            </div>}
         </UserContext.Provider>
       </body>
     </html>

@@ -12,7 +12,7 @@ import { removeFromSession } from '@/SessionFunc'
 
 const UserNavigation = () => {
 
-    let { userAuth: { username }, setUserAuth } = useContext(UserContext)
+    let { userAuth: { username }, setUserAuth, setCriteria } = useContext(UserContext)
 
     const handleSignOut = () => {
         removeFromSession("user")
@@ -26,7 +26,7 @@ const UserNavigation = () => {
         >
 
             <div className='bg-white absolute right-0 border border-grey w-60 duration-200'>
-                <Link href={'/editor'} className='flex gap-2 link md:hidden pl-8 py-4  items-center' >
+                <Link onClick={() => setCriteria(true)} href={'/editorPage'} className='flex gap-2 link md:hidden pl-8 py-4  items-center' >
                     <LuFileEdit className='text-2xl' />
                     <p>write</p>
                 </Link>

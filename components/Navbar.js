@@ -18,8 +18,7 @@ const Navbar = () => {
     const [userNavigate, setUserNavigate] = useState(false) // This is a client component 👈🏽
     const { push } = useRouter();
 
-    let { userAuth: { token, profile_img }, userAuth } = useContext(UserContext)
-
+    let { userAuth: { token, profile_img }, setCriteria, criteria } = useContext(UserContext)
     return (
         <nav className='navbar'>
             {/* log  */}
@@ -43,7 +42,7 @@ const Navbar = () => {
                     <IoSearch className='text-xl text-dark-grey ' />
                 </button>
 
-                <Link href={""} className='hidden md:flex gap-2 link md:justify-center md:items-center'>
+                <Link onClick={() => setCriteria(true)} href={"/editorPage"} className='hidden md:flex gap-2 link md:justify-center md:items-center'>
                     <LuFileEdit />
                     <p>write</p>
                 </Link>

@@ -11,8 +11,6 @@ import axios from 'axios';
 import { IoMdEye, IoMdEyeOff, IoIosKey } from "react-icons/io";
 import { storeInSession } from '../../SessionFunc'
 import { UserContext } from '../layout';
-import { Navigate } from 'react-router-dom';
-import { redirect } from 'next/dist/server/api-utils';
 import { useRouter } from 'next/navigation';
 import { authWithGoogle } from '@/middleware/firebase';
 
@@ -23,11 +21,12 @@ const Login = () => {
     const auth = useRef()
     const { push } = useRouter();
 
-    let { userAuth: { token }, setUserAuth, userAuth } = useContext(UserContext)
+    let { userAuth: { token }, setUserAuth } = useContext(UserContext)
 
     // google authencation 
     const googleAuthServer = (formData) => {
-        axios.post(process.env.NEXT_PUBLIC_URL + "/googleAuth", formData).then(({ data }) => {
+        axios.post(process.env.NEXT_PUBLIC_URL + "/api/googleAuth", formData).then(({ data }) => {
+            storeInSession("user", JSON.stringify(data))
             setUserAuth(data);
         }).catch(({ response }) => {
             toast.error("Internal Server Error ", {
@@ -61,7 +60,7 @@ const Login = () => {
 
     // calling backend 
     const userAuthServer = (formData) => {
-        axios.post(process.env.NEXT_PUBLIC_URL + "/login", formData).then(({ data }) => {
+        axios.post(process.env.NEXT_PUBLIC_URL + "/api/login", formData).then(({ data }) => {
             storeInSession("user", JSON.stringify(data.data))
             setUserAuth(data.data)
 

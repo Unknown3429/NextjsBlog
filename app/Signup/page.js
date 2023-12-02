@@ -23,7 +23,7 @@ const Signup = () => {
     const { push } = useRouter();
 
     const userAuthServer = (formData) => {
-        axios.post(process.env.NEXT_PUBLIC_URL + "/signup", formData).then(({ data }) => {
+        axios.post(process.env.NEXT_PUBLIC_URL + "/api/signup", formData).then(({ data }) => {
             setUserAuth(data.data);
         }).catch(({ response }) => {
             toast.error(response.data.data.error, {
@@ -39,7 +39,7 @@ const Signup = () => {
         })
     }
     const googleAuthServer = (formData) => {
-        axios.post(process.env.NEXT_PUBLIC_URL + "/googleAuth", formData).then(({ data }) => {
+        axios.post(process.env.NEXT_PUBLIC_URL + "/api/googleAuth", formData).then(({ data }) => {
             setUserAuth(data);
         }).catch(({ response }) => {
             toast.error("Internal Server Error ", {
